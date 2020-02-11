@@ -58,6 +58,7 @@
     </div>
     <script>
         $(function () {
+            //个人信息
             $.ajax({
                 type: "get",
                 url: BigNew.user_info,
@@ -69,6 +70,14 @@
                     $('.user_info>span').text('欢迎  ' + backData.data.nickname);
                 }
             })
+
+            //登出
+            $('.logout').click(function () {
+                //2.1 删除token
+                localStorage.removeItem('token');
+                //2.2 跳转登录页
+                window.location.href = './login.html';
+            });
         })
     </script>
 </body>
