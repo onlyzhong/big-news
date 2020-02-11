@@ -15,6 +15,7 @@
   <script src="./libs/jquery-1.12.4.min.js"></script>
   <!-- 引入bootstrap的js文件 -->
   <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./libs/http.js"></script>
 </head>
 
 <body>
@@ -37,7 +38,72 @@
       </form>
     </div>
   </div>
-
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">提示</h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      $('.input_sub').click(function (e) {
+        //2.阻止默认跳转事件（表单submit会自动跳转页面）
+        e.preventDefault();
+        //3.获取用户名和密码
+        var username = $('.input_txt').val().trim();//去除前后空格
+        var password = $('.input_pass').val().trim();
+        let json = {
+        }
+        //4.非空判断
+        if (username == '' || password == '') {
+          $(".modal-body").text("用户名和密码不能为空");
+          $('#myModal').modal();
+          return;
+        };
+        //5.ajax发送请求
+        $.ajax({
+          url: BigNew.user_login,
+          type: 'post',
+          dataType: 'json',
+          data: {
+            username,
+            password
+          },
+          success: function (backData) {
+            console.log(backData);
+            //6.处理响应结果  a.成功：跳转管理系统首页  b.失败：提示用户
+            if (backData.code == 200) {
+              //跳转首页
+              $(".modal-body").text(backData.msg);
+              $('#myModal').modal();
+              $('#myModal').on('hidden.bs.modal', function (e) {
+                localStorage.setItem("token", backData.token);
+                window.location.href = './index.html';
+              })
+              // setTimeout(function () {
+              //   window.location.href = './index.html';
+              // }, 1000)
+            } else {
+              $(".modal-body").text(backData.msg);
+              $('#myModal').modal();
+              // alert(backData.msg);
+            }
+          }
+        });
+      });
+    })
+  </script>
 </body>
 
 </html>
