@@ -56,13 +56,31 @@
 
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(function () {
             //个人信息
             $.ajax({
                 type: "get",
                 url: BigNew.user_info,
-                // dataType: 'json',
+                dataType: "json",
+                // headers: {'Authorization': localStorage.getItem("token")},
                 success: function (backData) {
                     console.log(backData);
                     $('.user_info>img').attr('src', backData.data.userPic);
@@ -71,13 +89,15 @@
                 }
             })
 
-            //登出
-            $('.logout').click(function () {
-                //2.1 删除token
-                localStorage.removeItem('token');
-                //2.2 跳转登录页
-                window.location.href = './login.html';
-            });
+            $(".logout").click(function () {
+                $(".modal-body").text("登出成功");
+                $("#myModal").modal();
+                localStorage.removeItem("token");
+                $("#myModal").on("hidden.bs.modal", function (e) {
+                    //跳转登陆页面
+                    window.location.href = "./login.html";
+                })
+            })
         })
     </script>
 </body>
