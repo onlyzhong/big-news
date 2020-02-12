@@ -41,12 +41,29 @@ $(function () {
             processData: false,
             data: new FormData(this),
             success: function (backData) {
+                if (backData.code == 200) {
+
+                }
                 console.log(backData);
                 $(".modal-body").text(backData.msg);
                 $("#myModal").modal();
                 $("#myModal").on("hidden.bs.modal", function () {
-                    //此处有跨域问题
-                    window.parent.location.reload();
+                    //此处有跨域问题---------------------------------------------------
+                    // 第一种方法
+                    // window.parent.location.reload();
+                    // 第二种方法
+                    $.ajax({
+                        type: "get",
+                        url: BigNew.user_info,
+                        dataType: "json",
+                        // headers: {'Authorization': localStorage.getItem("token")},
+                        success: function (backData) {
+                            console.log(backData);
+                            parent.$('.user_info>img').attr('src', backData.data.userPic);
+                            parent.$('.user_center_link>img').attr('src', backData.data.userPic);
+                            parent.$('.user_info>span').text(backData.data.nickname);
+                        }
+                    })
                 })
             }
         })
