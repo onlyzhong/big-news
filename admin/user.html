@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="./libs/jquery-1.12.4.min.js"></script>
+    <script src="./libs/http.js"></script>
 
 </head>
 
@@ -68,6 +69,28 @@
             </form>
         </div>
     </div>
+    <script>
+        $(function () {
+            //个人中心
+            $.ajax({
+                url: BigNew.user_detail,
+                type: "get",
+                dataType: "json",
+                success: function (backData) {
+                    console.log(backData);
+                    // $("input.username").val(backData.data.username);
+                    // $("input.nickname").val(backData.data.nickname);
+                    // $("input.email").val(backData.data.email);
+                    // $("input.password").val(backData.data.password);
+                    // 渲染页面的表单元素类名与服务器返回的对象属性名一致
+                    for (var key in backData.data) {
+                        $("input." + key).val(backData.data[key])
+                    }
+                    $('img.user_pic').attr('src', backData.data.userPic);
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
