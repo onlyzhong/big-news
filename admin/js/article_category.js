@@ -85,8 +85,8 @@ $(function () {
                     id: $(this).attr('data-id')
                 },
                 success: function (backData) {
+                    $('#myModal').modal('hide');
                     if (backData.code == 200) {
-                        $('#myModal').modal('hide');
                         //修改成功重新加载此页面
                         $.ajax({
                             type: "get",
