@@ -97,7 +97,7 @@
                         //console.log(backData);
                         if (backData.code == 204) {
                             //重新发送ajax请求,就获取当前页数据. 
-                            getData(mypage, function (backData) {
+                            articleQueryAjax(mypage, function (backData) {
                                 //删除了部分数据,那总页数就有可能发生了改变
                                 //调用changeTotalPages 这个方法 根据新的总页数 重新生成分页结构. 
                                 $('#pagination').twbsPagination('changeTotalPages',
