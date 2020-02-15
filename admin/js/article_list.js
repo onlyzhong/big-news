@@ -32,18 +32,13 @@
                         // var resHtml = template('arti_list', backData);
                         // $('tbody').html(resHtml);
                         $('tbody').html(template('arti_list', backData.data));
-                        if (backData.data.data.length != 0 && callback != null) {
+                        if (backData.data.totalPage != 0 && callback != null) {
                             //有数据了就应该把分页插件结构给显示
                             $('#pagination').show();
                             $('#pagination').next().hide();
                             callback(backData); //调用回调函数,把返回来的数据backData作为实参传递.
 
-                        } else if (backData.data.totalPage == mypage - 1 && backData.data.data.length == 0) {
-
-                            mypage -= 1;
-                            //调用changeTotalPages 这个方法 根据新的总页数 重新生成分页结构. 
-                            $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, mypage);
-                        } else if (backData.data.data.length == 0) {
+                        } else if (backData.data.totalPage == 0) {
                             //分页插件结构给隐藏
                             $('#pagination').hide();
                             $('#pagination').next().show(); //提示没有数据
@@ -99,9 +94,12 @@
                             //重新发送ajax请求,就获取当前页数据. 
                             articleQueryAjax(mypage, function (backData) {
                                 //删除了部分数据,那总页数就有可能发生了改变
-                                //调用changeTotalPages 这个方法 根据新的总页数 重新生成分页结构. 
-                                $('#pagination').twbsPagination('changeTotalPages',
-                                    backData.data.totalPage, mypage);
+                                if (backData.data.data.length == 0) {
+                                    mypage--;
+                                    //调用changeTotalPages 这个方法 根据新的总页数 重新生成分页结构. 
+                                    $('#pagination').twbsPagination('changeTotalPages',
+                                        backData.data.totalPage, mypage);
+                                }
                             });
                         }
                     }
