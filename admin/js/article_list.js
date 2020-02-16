@@ -71,8 +71,6 @@
             e.preventDefault();
             articleQueryAjax(1, function (backData) {
                 $('#pagination').twbsPagination('changeTotalPages', backData.data.totalPage, 1);
-
-
             });
         })
 
