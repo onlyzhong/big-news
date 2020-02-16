@@ -223,10 +223,61 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+
+    <!-- 最新资讯 -->
+    <script id="news" type="text/html">
+        {{each data}}
+        <div class="common_news_list">
+            <a href="./article.html?id={{ $value.id }}" class="list_pic"><img src="{{$value.cover}}" alt=""></a>
+            <h4><a href="./article.html?id={{ $value.id }}">{{$value.title}}</a></h4>
+            <p>{{@ $value.intro}}</p>
+            <div class="new_info">
+                <span>标签：{{ $value.category }}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读(
+                    {{ $value.read }})&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( {{ $value.comments }}
+                    )</span>
+                <b>{{ $value.date }}</b>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+    <!-- 热门焦点 -->
+    <script id="focus_news" type="text/html">
+        {{each data}}
+        {{if $index==0}}
+        <li class="first">
+            {{else}}
+        <li>
+            {{/if}}
+            <a href="./article.html?id={{$value.id}}"><img src="{{$value.cover}}" alt=""></a>
+            <p>{{$value.title}}</p>
+        </li>
+        {{/each}}
+    </script>
+
+    <!-- 最新评论 -->
+    <script id="comment" type="text/html">
+        {{each data v}}
+        <li>
+            <span>{{v.author.substr(0,1)}}</span>
+            <b><em>{{v.author}}</em> {{v.date}}</b>
+            <strong>{{v.intro}}</strong>
+        </li>
+        {{/each}}
+    </script>
+
+    <!-- 焦点关注 -->
+    <script id="focus_attention" type="text/html">
+        {{each data v}}
+        <li><a href="./article.html?id={{v.id}}">{{v.intro}}</a></li>
+        {{/each}}
+    </script>
+
     <!-- 导入模板引擎js文件 -->
     <script src="./js/template-web.js"></script>
     <!-- 引入jq文件 -->
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>
