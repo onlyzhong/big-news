@@ -78,6 +78,13 @@ $(function () {
         }
     })
 
+    //文本输入框设置键盘按下回车时间
+    $('.search_txt').on('keydown', function (e) {
+        if (e.keyCode == 13) {
+            $('.search_btn').click();
+        }
+    })
+
 
 
 })
