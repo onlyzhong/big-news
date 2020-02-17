@@ -273,6 +273,12 @@
         {{/each}}
     </script>
 
+    <script id="cat_list" type="text/html">
+        {{each data v}}
+        <li><a href="./list.html?id={{ v.id }}&name={{ v.name }}">{{ v.name }}</a></li>
+        {{/each}}
+    </script>
+
     <!-- 导入模板引擎js文件 -->
     <script src="./js/template-web.js"></script>
     <!-- 引入jq文件 -->

@@ -59,4 +59,25 @@ $(function () {
         }
     });
 
+    //分类列表
+    $.ajax({
+        type: 'get',
+        url: 'http://localhost:8080/api/v1/index/category',
+        success: function (backData) {
+            console.log(backData);
+            $('ul.level_two').html('<li class="up"></li>' + template('cat_list', backData));
+            $("ul.left_menu.fl").html(template('cat_list', backData));
+        }
+    });
+
+    //搜索
+    $(".search_btn").on("click", function () {
+        var search_txt = $(".search_txt").val().trim();
+        if (search_txt != "") {
+            window.location.href = "./list.html?search=" + search_txt;
+        }
+    })
+
+
+
 })
