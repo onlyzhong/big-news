@@ -47,7 +47,11 @@
   </div>
   <script id="comment_list" type="text/html">
     {{ each data v}}
+    {{ if v.state == '待审核'}}
+    <tr class="danger">
+      {{else}}
     <tr>
+      {{/if}}
       <td>{{ v.author }}</td>
       <td>{{ v.content }}</td>
       <td>{{ v.title }}</td>
